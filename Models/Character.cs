@@ -12,6 +12,9 @@ public abstract class Character : ICharacter
     // Navigation property to Room
     public virtual Room Room { get; set; }
 
+    // Navigation property to Abilities
+    public virtual ICollection<Ability> Abilities { get; set; }
+
     public virtual void Attack(ICharacter target)
     {
         Console.WriteLine($"{Name} attacks {target.Name}!");

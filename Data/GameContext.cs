@@ -18,7 +18,19 @@ public class GameContext : DbContext
             .HasDiscriminator<string>("Discriminator")
             .HasValue<Player>("Player")
             .HasValue<Goblin>("Goblin");
-
+                
+        // TODO Configure TPH for Ability hierarchy
+        modelBuilder.Entity<Ability>()
+            .HasDiscriminator<string>("Discriminator")
+            .HasValue<PlayerAbility>("Shove")
+            .HasValue<GoblinAbility>("Taunt");
+        
+        // Configure many-to-many relationship between Character and Ability
+        modelBuilder.Entity<Character>()
+            .HasMany(c => c.Abilities)
+            .WithMany(a => a.Characters)
+            .UsingEntity(j => j.ToTable("CharacterAbilities"));
+        
         base.OnModelCreating(modelBuilder);
     }
 }
